@@ -25,13 +25,12 @@ import {
   Textarea,
 } from '@chakra-ui/react'
 import { ChakraProvider } from '@chakra-ui/react'
-import { useEffect, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { useAnimation } from 'framer-motion';
-
+import { MutiProvider, useInfo } from './functions/context'
 
 function App() {
-  const [isEncode, setIsEncode] = useState(true);
-  const [method, setMethod] = useState('vigenere');
+  const {isEncode} = useInfo()
 
   return (
     <ChakraProvider>
@@ -50,16 +49,11 @@ function App() {
           width="100%"
           justifyContent='space-around'
           >
-            <Encoder 
-              method={method}  
-            />
-            <Core 
-              isEncode={isEncode} 
-              setIsEncode={setIsEncode}
-              method={method}
-              setMethod={setMethod}  
-            />
-            <Decoder />
+            <MutiProvider>
+              <Encoder />
+              <Core />
+              <Decoder />
+            </MutiProvider>
         </Box>
       </Container>
       </Box>
@@ -67,7 +61,10 @@ function App() {
   ) 
 }
 
-function Core({ setIsEncode, isEncode, method, setMethod }) {
+
+function Core() {
+  const {setIsEncode, isEncode, method, setMethod, setEncryptKey} = useInfo()
+  const handleKeyChange = (e) => setEncryptKey(String(e.target.value).toUpperCase())
   return (
     <Card width='350px'>
       <CardHeader pb={0}>
@@ -96,7 +93,7 @@ function Core({ setIsEncode, isEncode, method, setMethod }) {
             <Heading size='sm' pb={2}>
               Method
             </Heading>
-            <Select onChange={(e) => setMethod(e.target.value)}>
+            <Select onChange={(e) => setMethod(e.target.value)} value={method}>
               <option value='vigenere'>
                 Vigenere Cipher
               </option>
@@ -111,17 +108,38 @@ function Core({ setIsEncode, isEncode, method, setMethod }) {
               </option>
             </Select>
           </Box>
+          <Box>
+            <form>
+              <FormControl isRequired>
+                <Heading size='sm' pb={2}>
+                  Key
+                </Heading>
+                <Input 
+                  placeholder='Any key'
+                  type='text' 
+                  name='Method' 
+                  fontFamily='monospace' 
+                  onChange={handleKeyChange}/>
+              </FormControl>
+            </form>
+          </Box>
         </Stack>
       </CardBody>
     </Card>
   )
 }
 
-function Encoder({ method }) {
-  const [format, setFormat] = useState('text');
-  const [plainText, setPlainText] = useState('');
-  const [fileStream, setFileStream] = useState('');
+function Encoder() {
   const [fileName, setFileName] = useState('');
+  const { 
+    format, 
+    method, 
+    setFormat, 
+    plainText, 
+    setPlainText, 
+    fileStream, 
+    setFileStream
+  } = useInfo()
 
   useEffect(() => {
     if (textOnly) {
@@ -240,7 +258,6 @@ function Decoder() {
   const handleFormatChange = (e) => setFormat(e.target.value)
   const handlePlainTextChange = (e) => setPlainText(e.target.value)
   const handleFileChange = async (e) => {
-    
     setFileStream(await e.target.files[0].text())
   }
   return (
@@ -304,7 +321,7 @@ function Decoder() {
                     </Box>
                   </Box>
                 </Box>  
-            )
+              )
           }
         </Stack>
       </CardBody>
