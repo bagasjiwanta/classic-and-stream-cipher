@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { extendedVigenereFile, vigenereDecrypt, vigenereEncrypt, } from "../functions/viginere";
+import { extendedVigenereFile, vigenereDecrypt, vigenereEncrypt, } from "../functions/vigenere";
 
 const Context = createContext()
 
