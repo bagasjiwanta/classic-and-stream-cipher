@@ -19,6 +19,7 @@ export function MutiProvider({ children }) {
   const generateNewKey = async () => {
     const response = await fetch('/api/randomkey')
     const result = await response.text()
+    console.log(result);
     setEncryptKey(result)
   }
 
