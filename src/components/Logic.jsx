@@ -7,7 +7,7 @@ export const useInfo = () => useContext(Context)
 
 export function MutiProvider({ children }) {
   const [isEncode, setIsEncode] = useState(true);
-  const [method, setMethod] = useState('vigenere');
+  const [method, _setMethod] = useState('vigenere');
   const [encryptKey, setEncryptKey] = useState('')
   const [format, setFormat] = useState('text');
   const [inputText, setInputText] = useState('');
@@ -15,57 +15,54 @@ export function MutiProvider({ children }) {
   const [outputText, setOutputText] = useState('');
   const extendedvigenere = method === 'extendedvigenere'
 
-  const downloadFile = () => {
-    // return console.log(outputText)
+  const generateNewKey = async () => {
+    const response = await fetch('/api/randomkey')
+    const result = await response.text()
+    setEncryptKey(result)
+  }
+
+  const setMethod = (newMethod) => {
+    setInputText('')
+    setEncryptKey('')
+    setInputFile('')
+    setOutputText('')
+    _setMethod(newMethod)
+  }
+
+  const download = (blob, type, name) => {
     const element = document.createElement('a')
-    const file = new Blob([outputText], {type: 'application/octet-stream'})
+    const file = new Blob([blob], {type: type})
     element.href = URL.createObjectURL(file)
-    element.download = 'cipherfile'
+    element.download = name
     document.body.appendChild(element)
     element.click()
     element.remove()
   }
 
-  const downloadText = () => {
-    const element = document.createElement('a')
-    const file = new Blob([outputText], {type: 'text/plain'})
-    element.href = URL.createObjectURL(file)
-    element.download = 'cipherfile.txt'
-    document.body.appendChild(element)
-    element.click()
-    element.remove()
-  }
-
+  const downloadFile = () => download(outputText, 'application/octet-stream', 'cipherfile')
+  const downloadText = () => download(outputText, 'text/plain', 'cipherfile.txt')
+  const downloadKey = () => download(encryptKey, 'text/plain', 'key.txt')
   const alphabetOnly = (string) => /^$|^[a-z]+$/i.test(string)
   const asciiOnly = (string) => /^$|^[\x00-\xFF]+$/i.test(string)
 
   useEffect(() => {
     const update = async () => {
-      switch(method) {
-        case 'vigenere':
-          if(isEncode) setOutputText(vigenereEncrypt(inputText, encryptKey, false))
+      if (method === 'vigenere' || method === 'onetimepad'){
+        if(isEncode) setOutputText(vigenereEncrypt(inputText, encryptKey, false))
+        else setInputText(vigenereDecrypt(outputText, encryptKey))
+      }
+
+      else if (method === 'extendedvigenere'){
+        if(format === 'file') {
+          setOutputText(extendedVigenereFile(inputFile, encryptKey, isEncode))
+        } else {
+          if(isEncode) setOutputText(vigenereEncrypt(inputText, encryptKey))
           else setInputText(vigenereDecrypt(outputText, encryptKey))
-          break
+        }
+      }
 
-        case 'extendedvigenere':
-          if(format === 'file') {
-            // if(isEncode) setOutputText(vigenereEncrypt(inputFile, encryptKey))
-            // else setInputText(vigenereDecrypt(outputText, encryptKey))
-            setOutputText(
-              extendedVigenereFile(
-                inputFile,
-                encryptKey,
-                isEncode
-              )
-            )
-          } else {
-            if(isEncode) setOutputText(vigenereEncrypt(inputText, encryptKey))
-            else setInputText(vigenereDecrypt(outputText, encryptKey))
-          }
-          break
-
-        default:
-          console.log('hello')
+      else if (method === 'playfair') {
+        console.log('playfair')
       }
     }
 
@@ -92,7 +89,9 @@ export function MutiProvider({ children }) {
     asciiOnly,
     extendedvigenere,
     downloadFile,
-    downloadText
+    downloadText,
+    generateNewKey,
+    downloadKey
   }}>
     { children }
   </Context.Provider>

@@ -1,5 +1,6 @@
 import { 
   Box, 
+  Button, 
   Card, 
   CardBody, 
   CardHeader, 
@@ -22,14 +23,17 @@ function Middle() {
     extendedvigenere,
     asciiOnly,
     alphabetOnly,
-    encryptKey
+    encryptKey,
+    generateNewKey,
+    downloadKey
   } = useInfo()
 
   const handleKeyChange = (e) => {
+    const text = e.target.value
     if (extendedvigenere) {
-      asciiOnly(e.target.value) && setEncryptKey(e.target.value)
+      asciiOnly(text) && setEncryptKey(text)
     } else {
-      alphabetOnly(e.target.value) && setEncryptKey(e.target.value.toUpperCase())
+      alphabetOnly(text) && setEncryptKey(text.toUpperCase())
     } 
   }
 
@@ -45,7 +49,7 @@ function Middle() {
           >
             Encode
           </Heading>
-          <Heading
+          <Heading  
             size='lg'
             opacity={isEncode ? '0.4' : '1'}
             onClick={() => setIsEncode(false)}  
@@ -77,22 +81,55 @@ function Middle() {
             </Select>
           </Box>
           <Box>
-            <form>
-              <FormControl isRequired>
-                <Heading size='sm' pb={2}>
-                  Key
-                </Heading>
-                <Textarea
-                  placeholder='Key here'
-                  type='text' 
-                  name='Method' 
-                  fontFamily='monospace' 
-                  onChange={handleKeyChange}
-                  value={encryptKey}
-                  style={{textTransform: extendedvigenere ? null : 'uppercase'}}
-                />
-              </FormControl>
-            </form>
+            {/* onetimepad */}
+            {
+              method === 'onetimepad' 
+              ? (
+                <Stack spacing={2}>
+                  <Heading size='sm'>Key</Heading>
+                  <Textarea
+                    value={encryptKey}
+                    readOnly={true}
+                    fontFamily='monospace'
+                  />
+                  <HStack>
+                    <Button 
+                      colorScheme='yellow'
+                      onClick={async () => await generateNewKey()}
+                    >
+                      Generate new key
+                    </Button>
+                    <Button 
+                      colorScheme='yellow'
+                      onClick={downloadKey}
+                      >Download key</Button>
+                  </HStack>
+                </Stack>
+                )
+              : null
+            }
+
+            {/* Vigenere and Extended Vigenere*/}
+            {
+              method === 'vigenere' || method === 'extendedvigenere'
+              ? (
+                <>
+                  <Heading size='sm' pb={2}>
+                    Key
+                  </Heading>
+                  <Textarea
+                    placeholder='Key here'
+                    type='text' 
+                    name='Method' 
+                    fontFamily='monospace' 
+                    onChange={handleKeyChange}
+                    value={encryptKey}
+                    style={{textTransform: extendedvigenere ? null : 'uppercase'}}
+                  />
+                </>
+              ) : null
+            }
+
           </Box>
         </Stack>
       </CardBody>
