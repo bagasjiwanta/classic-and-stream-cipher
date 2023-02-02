@@ -8,7 +8,7 @@ export default function handler(req, res) {
   for(let i = 0;i <= 50000;i ++) {
     result += characters[Math.floor(Math.random() * second) % 26]
   }
-  const filename = process.cwd() + '/' + uuidv4() + '.txt';
+  const filename = '/tmp/' + uuidv4() + '.txt';
   try {
     fs.writeFileSync(filename, result)
     const fileBuffer = fs.readFileSync(filename)
@@ -16,6 +16,6 @@ export default function handler(req, res) {
     res.setHeader('Content-Type', 'text/plain')
     res.send(fileBuffer)
   } catch (err) {
-    res.send(err.toString() + ' - ' + filename)
+    res.send(err.toString())
   }
 }
