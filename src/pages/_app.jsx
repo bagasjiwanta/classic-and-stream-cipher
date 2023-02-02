@@ -1,5 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react'
-import { MutiProvider } from '../functions/context'
+import { MutiProvider } from '../components/Logic'
 
 export default function App({ Component, pageProps }) {
   return (

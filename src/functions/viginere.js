@@ -2,8 +2,10 @@ function len(str) {
     return str.length;
   }
   
-  
-  function vigenereEncrypt(text, key, extended=true) { //proses enkripsi
+  export function vigenereEncrypt(text, key, extended=true) { //proses enkripsi
+
+    if (!(key && text)) return ""
+
     let min = 65;
     let max = 26;
   
@@ -39,7 +41,10 @@ function len(str) {
     return result
   }
   
-  function vigenereDecrypt(text, key, extended=true) { //proses dekripsi
+  export function vigenereDecrypt(text, key, extended=true) { //proses dekripsi
+
+    if (!(key && text)) return ""
+
     let min = 65;
     let max = 26;
   
@@ -78,8 +83,42 @@ function len(str) {
     return result
   }
   
-  console.log(vigenereEncrypt("markicob62369*^&^*(", "ApaAja"));
-  console.log(vigenereDecrypt("®ÑÓ¬ÓÄ°Òsz¿gÈi", "ApaAja"))
-  console.log(vigenereEncrypt("BAGASMUTINGERJAINTUGASKRIPTO", "AKUPINTAR", false))
-  console.log(vigenereDecrypt("BKAPAZNTZNQYGRNBNKUQUHSEBPKO", "AKUPINTAR", false))
+const calcCaesar = (encrypt=true, key, value) => {
+  if (encrypt) {
+    return (key + value) % 256
+  } else {
+    return (key - value + 256) % 256
+  }
+}
+  
+export function extendedVigenereFile(fileArray = new Uint8Array(), key = '', encrypt=true) {
+  if(fileArray.length === 0 || key === '') {
+    return []
+  }
+  const multiplier = Math.floor(fileArray.length / key.length)
+  const remainder = fileArray.length % key.length
+
+  let fixKey = ""
+  for (let x = 0;x < multiplier;x ++) {
+    fixKey += key
+  }
+  fixKey + key.slice(0, remainder)
+
+  const encoder = new TextEncoder()
+  const keyArray = encoder.encode(fixKey)
+
+  const output = new Uint8Array(fileArray.length)
+
+  fileArray.forEach((value, index) => {
+    const encrypted = calcCaesar(encrypt, keyArray[index], value)
+    output[index] = encrypted
+  })
+
+  return output
+}
+
+  // console.log(vigenereEncrypt("markicob62369*^&^*(", "ApaAja"));
+  // console.log(vigenereDecrypt("®ÑÓ¬ÓÄ°Òsz¿gÈi", "ApaAja"))
+  // console.log(vigenereEncrypt("BAGASMUTINGERJAINTUGASKRIPTO", "AKUPINTAR", false))
+  // console.log(vigenereDecrypt("BKAPAZNTZNQYGRNBNKUQUHSEBPKO", "AKUPINTAR", false))
   
