@@ -14,7 +14,7 @@ import {
   Textarea,
 } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
-import { useAnimation } from 'framer-motion';
+import { useAnimationControls } from 'framer-motion';
 import { useInfo } from './Logic'
 
 function LeftSide() {
@@ -22,7 +22,7 @@ function LeftSide() {
     name: '',
     preview: ''
   });
-  const controls = useAnimation()
+  const controls = useAnimationControls()
   const { 
     format, 
     method, 
@@ -41,6 +41,12 @@ function LeftSide() {
       setFormat('text')
     }
   }, [method])
+
+  useEffect(() => {
+    if(inputFile.length === 0) {
+      setFileInfo({ name: '', preview: ''})
+    }
+  }, [inputFile])
 
   const ref = useRef()
   const handleFormatChange = (e) => setFormat(e.target.value)

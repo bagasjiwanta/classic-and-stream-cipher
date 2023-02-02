@@ -42,7 +42,7 @@ function RightSide() {
               value={
                 typeof outputText === 'string'
                   ? outputText.slice(0, 1000)
-                  : new TextDecoder().decode(outputText).slice(0, 1000)
+                  : new TextDecoder().decode(new Uint8Array(outputText)).slice(0, 1000)
               }
               isReadOnly={true}
             />

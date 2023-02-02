@@ -85,9 +85,9 @@ function len(str) {
   
 const calcCaesar = (encrypt=true, key, value) => {
   if (encrypt) {
-    return (key + value) % 256
+    return (value + key) % 256
   } else {
-    return (key - value + 256) % 256
+    return (value - key + 256) % 256
   }
 }
   

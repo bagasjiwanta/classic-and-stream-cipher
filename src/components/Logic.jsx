@@ -6,7 +6,7 @@ const Context = createContext()
 export const useInfo = () => useContext(Context)
 
 export function MutiProvider({ children }) {
-  const [isEncode, setIsEncode] = useState(true);
+  const [isEncode, _setIsEncode] = useState(true);
   const [method, _setMethod] = useState('vigenere');
   const [encryptKey, setEncryptKey] = useState('')
   const [format, setFormat] = useState('text');
@@ -21,12 +21,21 @@ export function MutiProvider({ children }) {
     setEncryptKey(result)
   }
 
-  const setMethod = (newMethod) => {
+  const clean = () => {
     setInputText('')
     setEncryptKey('')
     setInputFile('')
     setOutputText('')
+  }
+
+  const setMethod = (newMethod) => {
+    clean()
     _setMethod(newMethod)
+  }
+
+  const setIsEncode = (value) => {
+    clean()
+    _setIsEncode(value)
   }
 
   const download = (blob, type, name) => {
@@ -40,24 +49,29 @@ export function MutiProvider({ children }) {
   }
 
   const downloadFile = () => download(outputText, 'application/octet-stream', 'cipherfile')
+
   const downloadText = () => download(outputText, 'text/plain', 'cipherfile.txt')
+
   const downloadKey = () => download(encryptKey, 'text/plain', 'key.txt')
+
   const alphabetOnly = (string) => /^$|^[a-z]+$/i.test(string)
+
   const asciiOnly = (string) => /^$|^[\x00-\xFF]+$/i.test(string)
 
   useEffect(() => {
     const update = async () => {
       if (method === 'vigenere' || method === 'onetimepad'){
         if(isEncode) setOutputText(vigenereEncrypt(inputText, encryptKey, false))
-        else setInputText(vigenereDecrypt(outputText, encryptKey))
+        else setOutputText(vigenereDecrypt(inputText, encryptKey, false))
       }
 
       else if (method === 'extendedvigenere'){
         if(format === 'file') {
           setOutputText(extendedVigenereFile(inputFile, encryptKey, isEncode))
+          console.log(inputFile, outputText);
         } else {
           if(isEncode) setOutputText(vigenereEncrypt(inputText, encryptKey))
-          else setInputText(vigenereDecrypt(outputText, encryptKey))
+          else setOutputText(vigenereDecrypt(inputText, encryptKey))
         }
       }
 
