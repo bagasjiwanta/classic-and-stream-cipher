@@ -10,9 +10,9 @@ function Home() {
       <Container maxW="container.xl" pt={4} h='100vh'>
         <Box display='flex' flexDirection='row' width="100%" justifyContent='center' >
           <LeftSide />
-          <ChevronRightIcon mt={12} color='white' boxSize={20}/>
+          <ChevronRightIcon mt={12} color='white' boxSize={14}/>
           <Middle />
-          <ChevronRightIcon mt={12} color='white' boxSize={20}/>
+          <ChevronRightIcon mt={12} color='white' boxSize={14}/>
           <RightSide />
         </Box>
       </Container>
