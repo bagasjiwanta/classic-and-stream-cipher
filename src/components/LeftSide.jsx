@@ -33,7 +33,8 @@ function LeftSide() {
     setInputFile,
     alphabetOnly,
     asciiOnly,
-    extendedvigenere
+    extendedvigenere,
+    isEncode
   } = useInfo()
 
   useEffect(() => {
@@ -72,15 +73,15 @@ function LeftSide() {
   const textOnly = !extendedvigenere
 
   return (
-    <Card width='350px'>
+    <Card width='350px' height='600px'>
       <CardHeader pb={2}>
         <Heading as='h2' size='lg' color='blue.500'>
-          Plain
+        {!isEncode ? 'Cipher' : 'Plain'}
         </Heading>
       </CardHeader>
       <CardBody >
-        <Stack spacing={4}>
-          <Box>
+        <Stack spacing={2} height='100%'>
+          <Box mb={2}>
             <Heading size='sm' pb={2}>Format</Heading>
             <Select defaultValue='text' onChange={handleFormatChange}>
               <option value='text'>Text</option>
@@ -90,9 +91,10 @@ function LeftSide() {
           {
             format == 'text' 
             ? (
-            <Box>
-              <Heading size='sm' pb={2}>Text</Heading>
+            <>
+              <Heading size='sm'>Text</Heading>
               <Textarea 
+                flexGrow='1'
                 value={inputText}
                 onChange={handlePlainTextChange}
                 placeholder="Plain text here"  
@@ -100,7 +102,7 @@ function LeftSide() {
                   textTransform: extendedvigenere ? null : 'uppercase'
                 }}
               />
-            </Box>
+            </>
             )
             : ( 
                 <Box 
@@ -149,15 +151,16 @@ function LeftSide() {
           {
             format == 'text' 
             ? null
-            : <Box >
-                <Heading pb={2} size='sm'>Preview</Heading>
+            : <>
+                <Heading size='sm'>Preview</Heading>
                 <Textarea 
-                  height={300}
+                  pt={0}
+                  flexGrow='1'
                   value={fileInfo.preview} 
                   style={{ fontFamily:'monospace'}}
                   readOnly={true}
                 />
-              </Box>
+              </>
           }
         </Stack>
       </CardBody>
