@@ -2,12 +2,16 @@ function len(str) {
     return str.length;
   }
   
-  function print(something) {
-    console.log(something);
-  }
   
+  function vigenereEncrypt(text, key, extended=true) { //proses enkripsi
+    let min = 65;
+    let max = 26;
   
-  function vigenereEncrypt(text, key) { //proses enkripsi
+    if(extended) {
+      min = 0
+      max = 256
+    }
+
     let fixKey = key;
     let result = ""
     if (len(key) !== len(text)) {
@@ -27,15 +31,22 @@ function len(str) {
       }
     }
     for (let i = 0; i < len(text); i++){
-      let pi = text[i].charCodeAt() - 65
-      let ki = fixKey[i].charCodeAt() - 65
-      let encrypt = ((pi + ki) % 26 ) + 65
+      let pi = text[i].charCodeAt() - min
+      let ki = fixKey[i].charCodeAt() - min
+      let encrypt = ((pi + ki) % max ) + min
       result += String.fromCharCode(encrypt)
     }
     return result
   }
   
-  function vigenereDecrypt(text, key) { //proses dekripsi
+  function vigenereDecrypt(text, key, extended=true) { //proses dekripsi
+    let min = 65;
+    let max = 26;
+  
+    if(extended) {
+      min = 0
+      max = 256
+    }
     let fixKey = key;
     let result = ""
     if (len(key) !== len(text)) {
@@ -55,18 +66,20 @@ function len(str) {
       }
     }
     for (let i = 0; i < len(text); i++){
-      let ci = text[i].charCodeAt() - 65
-      let ki = fixKey[i].charCodeAt() - 65
+      let ci = text[i].charCodeAt() - min
+      let ki = fixKey[i].charCodeAt() - min
       let predec = (ci - ki)
       if (predec < 0) {
-        predec += 26
+        predec += max
       }
-      let decrypt = (predec % 26 ) + 65
+      let decrypt = (predec % max ) + min
       result += String.fromCharCode(decrypt)
     }
     return result
   }
   
-  // print(vigenereEncrypt("BAGASMUTINGERJAINTUGASKRIPTO", "AKUPINTAR"))
-  // print(vigenereDecrypt("BKAPAZNTZNQYGRNBNKUQUHSEBPKO", "AKUPINTAR"))
+  console.log(vigenereEncrypt("markicob62369*^&^*(", "ApaAja"));
+  console.log(vigenereDecrypt("®ÑÓ¬ÓÄ°Òsz¿gÈi", "ApaAja"))
+  console.log(vigenereEncrypt("BAGASMUTINGERJAINTUGASKRIPTO", "AKUPINTAR", false))
+  console.log(vigenereDecrypt("BKAPAZNTZNQYGRNBNKUQUHSEBPKO", "AKUPINTAR", false))
   

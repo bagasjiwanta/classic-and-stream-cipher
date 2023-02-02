@@ -27,9 +27,10 @@ import {
 import { ChakraProvider } from '@chakra-ui/react'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { useAnimation } from 'framer-motion';
-import { MutiProvider, useInfo } from './functions/context'
+import { MutiProvider, useInfo } from '../functions/context'
+import { oneTimePass } from '@/functions/onetimepass';
 
-function App() {
+function Home() {
   const {isEncode} = useInfo()
 
   return (
@@ -85,6 +86,7 @@ function Core() {
           >
             Decode
         </Heading>
+        <Button onClick={async () => await oneTimePass()} >Beuh</Button>
         </HStack>
       </CardHeader>
       <CardBody>
@@ -329,5 +331,5 @@ function Decoder() {
   )
 }
 
-export default App;
+export default Home;
 
