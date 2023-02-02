@@ -8,7 +8,7 @@ export default function handler(req, res) {
   for(let i = 0;i <= 50000;i ++) {
     result += characters[Math.floor(Math.random() * second) % 26]
   }
-  const filename = uuidv4() + '.txt';
+  const filename = './' + uuidv4() + '.txt';
   fs.writeFileSync(filename, result)
   const fileBuffer = fs.readFileSync(filename)
   fs.unlinkSync(filename)
