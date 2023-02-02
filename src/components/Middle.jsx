@@ -172,7 +172,7 @@ function Middle() {
 
             {/* Vigenere and Extended Vigenere*/}
             {
-              method === 'vigenere' || method === 'extendedvigenere'
+              method !== 'onetimepad'
               ? (
                 <Textarea
                     flexGrow='1'

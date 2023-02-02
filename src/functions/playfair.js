@@ -6,7 +6,7 @@ function print(something) {
   console.log(something);
 }
 
-function playfairEncrypt(text, key) {
+export function playfairEncrypt(text, key) {
   let preKey1 = "";
   let preKey2 = "";
   let fixKey = "";
@@ -90,10 +90,11 @@ function playfairEncrypt(text, key) {
       result = result + (keyMatrix[baris1][kolom2]) + (keyMatrix[baris2][kolom1])
     }
   }
+  return result
   // print(result)
 }
 
-function playfairDecrypt(text, key) {
+export function playfairDecrypt(text, key) {
   let preKey1 = "";
   let preKey2 = "";
   let fixKey = "";
@@ -171,7 +172,7 @@ function playfairDecrypt(text, key) {
       result = result + (keyMatrix[baris1][kolom2]) + (keyMatrix[baris2][kolom1])
     }
   }
-  print(result)
+  return result
 }
 
 // playfairDecrypt("ZBRSFYKUPGLGRKVSNLQV", "JALANGANESHASEPULUH")

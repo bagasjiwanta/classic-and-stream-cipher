@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { extendedVigenereFile, vigenereDecrypt, vigenereEncrypt, } from "../functions/vigenere";
+import { playfairDecrypt, playfairEncrypt } from "@/functions/playfair";
 
 const Context = createContext()
 
@@ -76,7 +77,8 @@ export function MutiProvider({ children }) {
       }
 
       else if (method === 'playfair') {
-        console.log('playfair')
+        if (isEncode) setOutputText(playfairEncrypt(inputText, encryptKey))
+        else setOutputText(playfairDecrypt(inputText, encryptKey))
       }
     }
 
