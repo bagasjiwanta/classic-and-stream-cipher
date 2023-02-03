@@ -5,7 +5,7 @@ export default function Description() {
   return (
     <Center p={7}>
 
-      <Card w='562px'>
+      <Card >
         <CardHeader pb={0}>
           <Heading size='lg'>Tucil 1 II4031 Kriptografi dan Koding</Heading>
         </CardHeader>

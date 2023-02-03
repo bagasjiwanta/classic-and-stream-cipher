@@ -39,7 +39,12 @@ export function MutiProvider({ children }) {
   };
 
   const setIsEncode = (value) => {
-    clean();
+    if (format !== 'file') {
+      setInputText(outputText)
+      setInputFile('')
+    } else {
+      clean()
+    }
     _setIsEncode(value);
   };
 

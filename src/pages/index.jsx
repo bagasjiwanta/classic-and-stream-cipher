@@ -1,20 +1,19 @@
-import { Box, Container } from '@chakra-ui/react'
+import { Box, Container, useMediaQuery } from '@chakra-ui/react'
 import RightSide from '@/components/RightSide';
 import LeftSide from '@/components/LeftSide';
 import Middle from '@/components/Middle';
-import { ChevronRightIcon } from '@chakra-ui/icons';
 import Description from '@/components/Description';
 
 function Home() {
+  const [desktop] = useMediaQuery('(min-width: 600px)');
   return (
-     <Box as='main' background="linear-gradient(60deg, #4b6cb7 0%, #182848 100%);">
-      <Container maxW="container.xl" h='100vh'>
+     <Box as='main' minH='100vh' pb={6} background="linear-gradient(60deg, #4b6cb7 0%, #182848 100%);">
+      <Container maxW="container.xl" h='100%'>
         <Description />
-        <Box display='flex' flexDirection='row' width="100%" justifyContent='center' >
+        <Box display='flex' width="100%" justifyContent='center'
+        flexDirection={desktop ? 'row' : 'column'} alignItems='center' gap={8}>
           <LeftSide />
-          <ChevronRightIcon mt={12} color='white' boxSize={10}/>
           <Middle />
-          <ChevronRightIcon mt={12} color='white' boxSize={10}/>
           <RightSide />
         </Box>
       </Container>
@@ -23,4 +22,4 @@ function Home() {
 }
 
 export default Home;
-
+  

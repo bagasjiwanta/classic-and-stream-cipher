@@ -100,10 +100,10 @@ function Middle() {
                       colorScheme="yellow"
                       onClick={async () => await generateNewKey()}
                     >
-                      Generate new key
+                      Regenerate
                     </Button>
                     <Button colorScheme="yellow" onClick={downloadKey}>
-                      Download key
+                      Download
                     </Button>
                   </HStack>
                 ) : (
