@@ -23,7 +23,6 @@ export function MutiProvider({ children }) {
   const generateNewKey = async () => {
     const response = await fetch("/api/randomkey");
     const result = await response.text();
-    console.log(result);
     setEncryptKey(result);
   };
 
@@ -75,7 +74,6 @@ export function MutiProvider({ children }) {
       } else if (method === "extendedvigenere") {
         if (format === "file") {
           setOutputText(extendedVigenereFile(inputFile, encryptKey, isEncode));
-          console.log(inputFile, outputText);
         } else {
           if (isEncode) setOutputText(vigenereEncrypt(inputText, encryptKey));
           else setOutputText(vigenereDecrypt(inputText, encryptKey));

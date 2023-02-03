@@ -21,7 +21,7 @@ function RightSide() {
   } = useInfo();
 
   return (
-    <Card width="350px" height="550px">
+    <Card width="350px" height="500px">
       <CardHeader pb={2}>
         <Heading as="h2" size="lg" color="teal.500">
           {isEncode ? "Cipher" : "Plain"}

@@ -70,7 +70,7 @@ function LeftSide() {
   const textOnly = !extendedvigenere;
 
   return (
-    <Card width="350px" height="550px">
+    <Card width="350px" height="500px">
       <CardHeader pb={2}>
         <Heading as="h2" size="lg" color="blue.500">
           {!isEncode ? "Cipher" : "Plain"}

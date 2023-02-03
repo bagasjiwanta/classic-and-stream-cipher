@@ -49,7 +49,7 @@ function Middle() {
   };
 
   return (
-    <Card width="350px" height="550px">
+    <Card width="350px" height="500px">
       <CardHeader pb={2}>
         <HStack justifyContent="flex-start" gap={2}>
           <Heading
@@ -151,7 +151,6 @@ function Middle() {
                         onDragEnter={() => controls.start("hover")}
                         onDragLeave={() => controls.stop()}
                         onChange={handleFileChange}
-                        // onChange={async e => console.log(await e.target.files[0].arrayBuffer())}
                       />
                     </Box>
                   </Box>

@@ -7,6 +7,7 @@ function print(something) {
 }
 
 export function playfairEncrypt(text, key) {
+  if (key === '') return ''
   let preKey1 = "";
   let preKey2 = "";
   let fixKey = "";
