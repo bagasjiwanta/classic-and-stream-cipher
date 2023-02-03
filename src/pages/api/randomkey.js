@@ -8,10 +8,14 @@ export default function handler(req, res) {
   for(let i = 0;i <= 50000;i ++) {
     result += characters[Math.floor(Math.random() * second) % 26]
   }
-  const filename = uuidv4() + '.txt';
-  fs.writeFileSync(filename, result)
-  const fileBuffer = fs.readFileSync(filename)
-  fs.unlinkSync(filename)
-  res.setHeader('Content-Type', 'text/plain')
-  res.send(fileBuffer)
+  const filename = '/tmp/' + uuidv4() + '.txt';
+  try {
+    fs.writeFileSync(filename, result)
+    const fileBuffer = fs.readFileSync(filename)
+    fs.unlinkSync(filename)
+    res.setHeader('Content-Type', 'text/plain')
+    res.send(fileBuffer)
+  } catch (err) {
+    res.send(err.toString())
+  }
 }
