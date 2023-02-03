@@ -31,12 +31,7 @@ function playfairEncrypt(text, key) {
       fixKey += playfair_key[i]
     }
   }
-  // let keyMatrix = new Array(26).fill('x');
-  // for (let i = 0; i < 25; i++){
-  //   if (keyMatrix[i] === 'x'){
-      
-  //   }
-  // }
+
   let keyMatrix = [
     fixKey.slice(0, 5).split(''),
     fixKey.slice(5, 10).split(''),
@@ -90,7 +85,6 @@ function playfairEncrypt(text, key) {
       result = result + (keyMatrix[baris1][kolom2]) + (keyMatrix[baris2][kolom1])
     }
   }
-  // print(result)
 }
 
 function playfairDecrypt(text, key) {
@@ -174,4 +168,3 @@ function playfairDecrypt(text, key) {
   print(result)
 }
 
-// playfairDecrypt("ZBRSFYKUPGLGRKVSNLQV", "JALANGANESHASEPULUH")
