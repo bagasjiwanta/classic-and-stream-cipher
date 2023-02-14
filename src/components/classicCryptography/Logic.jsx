@@ -4,6 +4,7 @@ import {
   vigenereDecrypt,
   vigenereEncrypt,
 } from "@/functions/vigenere";
+import { download } from "../helper";
 import { playfairDecrypt, playfairEncrypt } from "@/functions/playfair";
 
 const Context = createContext();
@@ -48,16 +49,6 @@ export function MutiProvider({ children }) {
     _setIsEncode(value);
   };
 
-  const download = (blob, type, name) => {
-    const element = document.createElement("a");
-    const file = new Blob([blob], { type: type });
-    element.href = URL.createObjectURL(file);
-    element.download = name;
-    document.body.appendChild(element);
-    element.click();
-    element.remove();
-  };
-
   const downloadFile = () =>
     download(outputText, "application/octet-stream", "cipherfile");
 
@@ -65,10 +56,6 @@ export function MutiProvider({ children }) {
     download(outputText, "text/plain", "cipherfile.txt");
 
   const downloadKey = () => download(encryptKey, "text/plain", "key.txt");
-
-  const alphabetOnly = (string) => /^$|^[a-z]+$/i.test(string);
-
-  const asciiOnly = (string) => /^$|^[\x00-\xFF]+$/i.test(string);
 
   useEffect(() => {
     const update = async () => {
@@ -108,8 +95,6 @@ export function MutiProvider({ children }) {
         inputFile,
         setInputFile,
         outputText,
-        alphabetOnly,
-        asciiOnly,
         extendedvigenere,
         downloadFile,
         downloadText,

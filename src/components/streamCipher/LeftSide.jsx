@@ -10,51 +10,33 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
-import { useAnimationControls } from "framer-motion";
-import { useInfo } from "./Logic";
-import { asciiOnly, alphabetOnly } from "../helper";
+import { useState } from "react";
+import { asciiOnly } from "../helper";
 import { FileInput, FilePreview, TextInput } from "../Inputs";
 
-function LeftSide() {
+function LeftSide({ 
+  isEncode = true, 
+  format,
+  setFormat,
+  inputText,
+  setInputText,
+  setInputFile
+}) {
   const [fileInfo, setFileInfo] = useState({
     name: "",
     preview: "",
   });
-  const controls = useAnimationControls();
-  const {
-    format,
-    method,
-    setFormat,
-    inputText,
-    setInputText,
-    inputFile,
-    setInputFile,
-    extendedvigenere,
-    isEncode,
-  } = useInfo();
 
-  useEffect(() => {
-    if (textOnly) {
-      setFormat("text");
-    }
-  }, [method]);
+  const handleFormatChange = (e) => {
+    if (format === 'text') setInputFile(null)
+    else setInputText("")
+    setFileInfo({name: '', preview: ""})
+    setFormat(e.target.value)
+  };
 
-  useEffect(() => {
-    if (inputFile.length === 0) {
-      setFileInfo({ name: "", preview: "" });
-    }
-  }, [inputFile]);
-
-  const ref = useRef();
-  const handleFormatChange = (e) => setFormat(e.target.value);
   const handlePlainTextChange = (e) => {
     const text = e.target.value;
-    if (extendedvigenere) {
-      asciiOnly(text) && setInputText(text);
-    } else {
-      alphabetOnly(text) && setInputText(text.toUpperCase());
-    }
+    asciiOnly(text) && setInputText(text);
   };
 
   const handleFileChange = async (e) => {
@@ -67,7 +49,6 @@ function LeftSide() {
     });
     setInputFile(file);
   };
-  const textOnly = !extendedvigenere;
 
   return (
     <Card width="350px" height="500px">
@@ -84,14 +65,14 @@ function LeftSide() {
             </Heading>
             <Select defaultValue="text" onChange={handleFormatChange}>
               <option value="text">Text</option>
-              {textOnly ? null : <option value="file">File</option>}
+              <option value="file">File</option>
             </Select>
           </Box>
           {format == "text" ? (
             <TextInput 
               onChange={handlePlainTextChange} 
               inputText={inputText} 
-              uppercase={!extendedvigenere}
+              uppercase={false}
             />) : (
             <FileInput 
               fileInfo={fileInfo} 

@@ -17,7 +17,7 @@ import Link from 'next/link';
 
 function Home() {
   return (
-     <Box as='main' minH='100vh' pb={6} background="linear-gradient(60deg, #4b6cb7 0%, #182848 100%);">
+     <Box as='main' minH='100vh' pb={6} background="linear-gradient(45deg, #0700b8 0%, #00ff88 100%);">
       <Container maxW="container.xl" h='100%'>
         <Description title="Tugas II4031 Kriptografi dan Koding" home='true'/>
         <Center p={7}>

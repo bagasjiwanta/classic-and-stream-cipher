@@ -13,6 +13,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useInfo } from "./Logic";
+import { asciiOnly, alphabetOnly } from "../helper";
 import { useAnimationControls } from "framer-motion";
 import { useState } from "react";
 
@@ -26,8 +27,6 @@ function Middle() {
     setMethod,
     setEncryptKey,
     extendedvigenere,
-    asciiOnly,
-    alphabetOnly,
     encryptKey,
     generateNewKey,
     downloadKey,
