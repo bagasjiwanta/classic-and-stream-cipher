@@ -17,9 +17,7 @@ export default function App({ Component, pageProps }) {
         <meta name="theme-color" content="#ffffff"/>
       </Head>
       <ChakraProvider>
-        <MutiProvider>
-          <Component {...pageProps} />
-        </MutiProvider>
+        <Component {...pageProps} />
       </ChakraProvider>
     </>
   )

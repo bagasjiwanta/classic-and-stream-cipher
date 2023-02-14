@@ -1,13 +1,13 @@
 import { Card, CardBody, CardFooter, CardHeader, Center, HStack, Heading, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
-export default function Description() {
+export default function Description({ title, description }) {
   return (
     <Center p={7}>
-
       <Card >
         <CardHeader pb={0}>
-          <Heading size='lg'>Tucil 1 II4031 Kriptografi dan Koding</Heading>
+          <Heading size='lg'>{title}</Heading>
+          <Text fontSize="larger">{description}</Text>
         </CardHeader>
         <CardBody pb={0}>
           <HStack justifyContent='space-between'>
