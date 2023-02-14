@@ -1,5 +1,4 @@
 import { ChakraProvider } from '@chakra-ui/react'
-import { MutiProvider } from '../components/Logic'
 import Head from 'next/head'
 
 export default function App({ Component, pageProps }) {
@@ -17,9 +16,7 @@ export default function App({ Component, pageProps }) {
         <meta name="theme-color" content="#ffffff"/>
       </Head>
       <ChakraProvider>
-        <MutiProvider>
-          <Component {...pageProps} />
-        </MutiProvider>
+        <Component {...pageProps} />
       </ChakraProvider>
     </>
   )
