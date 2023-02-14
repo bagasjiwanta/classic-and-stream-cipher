@@ -6,13 +6,13 @@ function swap(arr = [], i = 0, j = 0) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
 }
 
-export const stats = {
+const stats = {
     time: [],
     strength: []
 }
 
 /** Mengukur lama waktu eksekusi fungsi dalam hitungan ms */
-export function measureTime(next = () => {}) {
+function measureTime(next = () => {}) {
     const begin = new Date().getTime();
     const result = next();
     const end = new Date().getTime();
@@ -38,16 +38,13 @@ function repeatKey(key) {
     return output;
 }
 
-const baseState = []
-
 /** Key Swapping Algorithm */
 function ksa(key = []) {
-    if(baseState === []) {
-        for (let i = 0; i < N; i++) {
-            baseState[i] = i;
-        }
+    const S = [];
+
+    for (let i = 0; i < N; i++) {
+        S[i] = i;
     }
-    const S = [...baseState];
 
     let j = 0;
     for (let i = 0; i < N; i++) {
@@ -63,17 +60,12 @@ function prga(S = [], M = []) {
     let j = 0;
     const output = []
 
-    // modification (add 256 to the upper limit)
-    for (let x = 0; x < M.length + 256; x++) {
+    for (let x = 0; x < M.length; x++) {
         i = (i + 1) % N;
         j = (j + S[i]) % N;
         swap(S, i, j)
-
-        // modification. Drop the first 256 bytes to defend against Fluhrer, Mantin, and Shamir Attack.
-        if(x > 255) {
-            let g = S[(S[i] + S[j]) % N];
-            output.push(g ^ M[x - 256]);
-        }
+        let g = S[(S[i] + S[j]) % N];
+        output.push(g ^ M[x]);
     }
 
     return output
@@ -83,7 +75,7 @@ function prga(S = [], M = []) {
  * Modified RC4. 
  * Will be modified in the future, currently it is the same as the original
  * */
-export function mrc4(input = [], key = [], string = true) {
+function mrc4(input = [], key = [], string = true) {
     let _input = input
     let _key = key
     if (string) {
@@ -96,6 +88,7 @@ export function mrc4(input = [], key = [], string = true) {
     const S = ksa(fixKey)
     let output = prga(S, _input)
     /* End Main Algorithm*/
+    console.log({ mrc4: output })
 
     if (string) output = arrayToString(output)
     return output
@@ -110,3 +103,9 @@ function stringToArray(string = '') {
 function arrayToString(array = []) {
     return String.fromCharCode(...array)
 }
+
+function main() {
+    
+}
+
+main()
