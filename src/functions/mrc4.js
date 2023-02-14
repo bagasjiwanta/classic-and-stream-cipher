@@ -38,16 +38,16 @@ function repeatKey(key) {
     return output;
 }
 
-const baseState = []
+var baseState = []
 
 /** Key Swapping Algorithm */
 function ksa(key = []) {
-    if(baseState === []) {
+    if(baseState.length === 0) {
         for (let i = 0; i < N; i++) {
-            baseState[i] = i;
+            baseState.push(i)
         }
     }
-    const S = [...baseState];
+    const S = baseState.concat();
 
     let j = 0;
     for (let i = 0; i < N; i++) {
@@ -96,6 +96,7 @@ export function mrc4(input = [], key = [], string = true) {
     const S = ksa(fixKey)
     let output = prga(S, _input)
     /* End Main Algorithm*/
+    console.log({ _input, output, fixKey, S})
 
     if (string) output = arrayToString(output)
     return output
