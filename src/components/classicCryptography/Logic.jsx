@@ -3,7 +3,7 @@ import {
   extendedVigenereFile,
   vigenereDecrypt,
   vigenereEncrypt,
-} from "../functions/vigenere";
+} from "@/functions/vigenere";
 import { playfairDecrypt, playfairEncrypt } from "@/functions/playfair";
 
 const Context = createContext();

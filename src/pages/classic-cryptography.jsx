@@ -1,8 +1,8 @@
 import Description from "@/components/Description";
-import LeftSide from "@/components/LeftSide";
-import { MutiProvider } from "@/components/Logic";
-import Middle from "@/components/Middle";
-import RightSide from "@/components/RightSide";
+import LeftSide from "@/components/classicCryptography/LeftSide";
+import { MutiProvider } from "@/components/classicCryptography/Logic";
+import Middle from "@/components/classicCryptography/Middle";
+import RightSide from "@/components/classicCryptography/RightSide";
 import { Box, Container, useMediaQuery } from "@chakra-ui/react";
 
 export default function Page () {

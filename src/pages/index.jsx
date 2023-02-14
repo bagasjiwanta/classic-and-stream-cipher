@@ -1,21 +1,48 @@
-import { Box, Container, useMediaQuery } from '@chakra-ui/react'
-import RightSide from '@/components/RightSide';
-import LeftSide from '@/components/LeftSide';
-import Middle from '@/components/Middle';
+import { 
+  Box, 
+  Card,
+  CardBody, 
+  CardFooter, 
+  CardHeader, 
+  Center, 
+  Container, 
+  HStack, 
+  Heading, 
+  Stack, 
+  StackDivider, 
+  Text 
+} from '@chakra-ui/react'
 import Description from '@/components/Description';
+import Link from 'next/link';
 
 function Home() {
-  const [desktop] = useMediaQuery('(min-width: 600px)');
   return (
      <Box as='main' minH='100vh' pb={6} background="linear-gradient(60deg, #4b6cb7 0%, #182848 100%);">
       <Container maxW="container.xl" h='100%'>
-        <Description />
-        <Box display='flex' width="100%" justifyContent='center'
-        flexDirection={desktop ? 'row' : 'column'} alignItems='center' gap={8}>
-          <LeftSide />
-          <Middle />
-          <RightSide />
-        </Box>
+        <Description title="Tugas II4031 Kriptografi dan Koding" home='true'/>
+        <Center p={7}>
+          <Card >
+            <CardHeader>
+              <Heading size='lg'>List of cryptography and ciphers</Heading>
+            </CardHeader>
+            <CardBody >
+              <Stack divider={<StackDivider />} spacing='4'>
+                <Link href='/classic-cryptography'>
+                  <Box>
+                    <Heading size='sm'>Tucil 1 : Classic Cryptography</Heading>
+                    <Text pt='2' fontSize='sm'>Vigenere Cipher, Extended Vigenere Cipher, Playfair Cipher, One Time Pad</Text>
+                  </Box>
+                </Link>
+                <Link href='/stream-cipher'>
+                  <Box>
+                    <Heading size='sm'>Tucil 2 : Stream Cipher</Heading>
+                    <Text pt='2' fontSize='sm'>Modified RC4</Text>
+                  </Box>
+                </Link>
+              </Stack>
+            </CardBody>
+          </Card>
+        </Center>
       </Container>
     </Box>
   ) 
