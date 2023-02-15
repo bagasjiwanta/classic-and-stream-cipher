@@ -24,24 +24,18 @@ function repeatKey(key) {
     return output;
 }
 
-var baseState = new Uint8Array(256)
-
 
 /** Key Swapping Algorithm */
 function ksa(key = []) {
-    if(baseState[0] === 0 && baseState[1] === 0) {
-        for (let i = 0; i < N; i++) {
-            baseState[i] = i
-        }
+    let S = []
+    for (let i = 0; i < 256; i++) {
+        S[i] = i
     }
-    const S = new Uint8Array(baseState)
-
     let j = 0;
     for (let i = 0; i < N; i++) {
         j = (j + S[i] + key[i % key.length]) % N;
         swap(S, i, j)
     }
-    console.log({S})
     return S;
 }
 
@@ -60,10 +54,12 @@ function prga(S = [], M = []) {
         // modification. Drop the first 256 bytes to defend against Fluhrer, Mantin, and Shamir Attack.
         if(x > 255) {
             let g = S[(S[i] + S[j]) % N];
-            output[x - 256] = (g ^ M[x - 256]);
-        }
+            let out = g ^ M[x - 256]
+            // let lfsr = 10
+            // out = lfsr ^ out
+            output[x - 256] = out;
+        } 
     }
-
     return output
 }
 
@@ -73,18 +69,15 @@ function prga(S = [], M = []) {
  * */
 export function mrc4(input = [], key = [], string = true) {
     let _input = input
-    let _key = key
+    let _key = stringToArray(key)
     if (string) {
         _input = stringToArray(input)
-        _key = stringToArray(key)
     }
-
     /* Main Algorithm */
     const fixKey = repeatKey(_key)
     const S = ksa(fixKey)
     let output = prga(S, _input)
     /* End Main Algorithm*/
-
     if (string) output = arrayToString(output)
     return output
 }
@@ -96,5 +89,7 @@ function stringToArray(string = '') {
 
 /** Converts array of integer ascii values to string */
 function arrayToString(array = []) {
-    return String.fromCharCode(...array)
+    let output = ''
+    array.forEach(v => output += String.fromCharCode(v))
+    return output;
 }

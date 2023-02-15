@@ -11,7 +11,6 @@ import {
 
 function RightSide(props) {
   const { outputText, downloadText, downloadFile } = props;
-
   return (
     <Card width="350px" height="500px">
       <CardHeader pb={2}>
@@ -21,18 +20,12 @@ function RightSide(props) {
       </CardHeader>
       <CardBody>
         <Stack spacing={2} h="100%">
-          <Heading size="sm">Result </Heading>
+          <Heading size="sm">Result {outputText.length}</Heading>
           <Textarea
             flexGrow="1"
             placeholder="Cipher text here"
             fontFamily="monospace"
-            value={
-              typeof outputText === "string"
-                ? outputText.slice(0, 1000)
-                : new TextDecoder()
-                    .decode(new Uint8Array(outputText))
-                    .slice(0, 1000)
-            }
+            value={typeof outputText === 'string' ? outputText : new TextDecoder().decode(outputText)}
             isReadOnly={true}
           />
           <HStack w="100%" pt={2}>

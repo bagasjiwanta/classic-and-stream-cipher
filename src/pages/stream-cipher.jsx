@@ -35,7 +35,6 @@ export default function Page() {
   };
 
   useEffect(() => {
-    // console.log({encryptKey, inputText, format})
     if (encryptKey === "" || (inputText === "" && inputFile === null)) {
       setOutputText("");
       return;

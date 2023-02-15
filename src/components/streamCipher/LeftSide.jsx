@@ -12,7 +12,6 @@ import { asciiOnly } from "../helper";
 import { FileInput, FilePreview, TextInput } from "../Inputs";
 
 function LeftSide({
-  isEncode = true,
   format,
   setFormat,
   inputText,
