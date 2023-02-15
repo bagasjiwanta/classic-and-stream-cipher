@@ -10,17 +10,17 @@ import {
 } from "@chakra-ui/react";
 
 function RightSide(props) {
-  const { outputText, downloadText, downloadFile } = props;
+  const { outputText, downloadText, downloadFile, isEncode } = props;
   return (
     <Card width="350px" height="500px">
       <CardHeader pb={2}>
         <Heading as="h2" size="lg" color="teal.500">
-          Cipher/Plain
+          {isEncode ? "Cipher" : "Plain"}
         </Heading>
       </CardHeader>
       <CardBody>
         <Stack spacing={2} h="100%">
-          <Heading size="sm">Result {outputText.length}</Heading>
+          <Heading size="sm">Result</Heading>
           <Textarea
             flexGrow="1"
             placeholder="Cipher text here"

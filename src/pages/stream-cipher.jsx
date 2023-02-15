@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 export default function Page() {
   const [desktop] = useMediaQuery("(min-width: 600px)");
   const [inputText, setInputText] = useState("");
-  const [isEncode, setIsEncode] = useState(true);
+  const [isEncode, _setIsEncode] = useState(true);
   const [format, setFormat] = useState("text");
   const [inputFile, setInputFile] = useState([]);
   const [encryptKey, setEncryptKey] = useState("");
@@ -19,7 +19,22 @@ export default function Page() {
     download(outputText, "application/octet-stream", "result");
   const downloadText = () => download(outputText, "text/plain", "result.txt");
 
+  const setIsEncode = (_input) => {
+    if (format === 'file') {
+      setInputText('')
+      setEncryptKey('')
+      setOutputText('')
+    } else {
+      setInputText(outputText)
+    }
+    
+    setInputFile([])
+    _setIsEncode(_input)
+  }
+
   const props = {
+    isEncode,
+    setIsEncode,
     inputText,
     setInputText,
     format,
@@ -47,7 +62,7 @@ export default function Page() {
       const result = mrc4(inputFile, encryptKey, false);
       setOutputText(result);
     }
-  }, [inputFile, inputText, encryptKey]);
+  }, [inputFile, inputText, encryptKey, isEncode]);
 
   return (
     <Box

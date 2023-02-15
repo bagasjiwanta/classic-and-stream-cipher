@@ -12,6 +12,7 @@ import { asciiOnly } from "../helper";
 import { FileInput, FilePreview, TextInput } from "../Inputs";
 
 function LeftSide({
+  isEncode,
   format,
   setFormat,
   inputText,
@@ -50,7 +51,7 @@ function LeftSide({
     <Card width="350px" height="500px">
       <CardHeader pb={2}>
         <Heading as="h2" size="lg" color="blue.500">
-          Cipher/Plain
+          {isEncode ? "Plain" : "Cipher"}
         </Heading>
       </CardHeader>
       <CardBody>
