@@ -1,25 +1,17 @@
 import {
   Box,
-  Button,
   Card,
   CardBody,
   CardHeader,
   HStack,
   Heading,
-  Input,
   Select,
   Stack,
-  Text,
   Textarea,
 } from "@chakra-ui/react";
-import { asciiOnly, alphabetOnly } from "../helper";
+import { asciiOnly } from "../helper";
 
-function Middle({
-  setIsEncode,
-  isEncode,
-  setEncryptKey,
-  encryptKey,
-}) {
+function Middle({ setEncryptKey, encryptKey }) {
   const handleKeyChange = (e) => {
     const text = e.target.value;
     asciiOnly(text) && setEncryptKey(text);
@@ -29,22 +21,7 @@ function Middle({
     <Card width="350px" height="500px">
       <CardHeader pb={2}>
         <HStack justifyContent="flex-start" gap={2}>
-          <Heading
-            size="lg"
-            opacity={isEncode ? "1" : "0.4"}
-            onClick={() => setIsEncode(true)}
-            cursor="pointer"
-          >
-            Encode
-          </Heading>
-          <Heading
-            size="lg"
-            opacity={isEncode ? "0.4" : "1"}
-            onClick={() => setIsEncode(false)}
-            cursor="pointer"
-          >
-            Decode
-          </Heading>
+          <Heading size="lg">Encode/Decode</Heading>
         </HStack>
       </CardHeader>
       <CardBody>

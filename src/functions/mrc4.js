@@ -6,20 +6,6 @@ function swap(arr = [], i = 0, j = 0) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
 }
 
-export const stats = {
-    time: [],
-    strength: []
-}
-
-/** Mengukur lama waktu eksekusi fungsi dalam hitungan ms */
-export function measureTime(next = () => {}) {
-    const begin = new Date().getTime();
-    const result = next();
-    const end = new Date().getTime();
-    stats.time.push(end - begin)
-    return result
-}
-
 /** Mengulangi key jika panjangnya lebih kecil dari N (256) */
 function repeatKey(key) {
     const output = [];
@@ -38,22 +24,24 @@ function repeatKey(key) {
     return output;
 }
 
-var baseState = []
+var baseState = new Uint8Array(256)
+
 
 /** Key Swapping Algorithm */
 function ksa(key = []) {
-    if(baseState.length === 0) {
+    if(baseState[0] === 0 && baseState[1] === 0) {
         for (let i = 0; i < N; i++) {
-            baseState.push(i)
+            baseState[i] = i
         }
     }
-    const S = baseState.concat();
+    const S = new Uint8Array(baseState)
 
     let j = 0;
     for (let i = 0; i < N; i++) {
         j = (j + S[i] + key[i % key.length]) % N;
         swap(S, i, j)
     }
+    console.log({S})
     return S;
 }
 
@@ -61,7 +49,7 @@ function ksa(key = []) {
 function prga(S = [], M = []) {
     let i = 0;
     let j = 0;
-    const output = []
+    const output = new Uint8Array(M.length)
 
     // modification (add 256 to the upper limit)
     for (let x = 0; x < M.length + 256; x++) {
@@ -72,7 +60,7 @@ function prga(S = [], M = []) {
         // modification. Drop the first 256 bytes to defend against Fluhrer, Mantin, and Shamir Attack.
         if(x > 255) {
             let g = S[(S[i] + S[j]) % N];
-            output.push(g ^ M[x - 256]);
+            output[x - 256] = (g ^ M[x - 256]);
         }
     }
 
@@ -80,8 +68,8 @@ function prga(S = [], M = []) {
 }
 
 /** 
- * Modified RC4. 
- * Will be modified in the future, currently it is the same as the original
+ * Modified RC4 (MRC4). 
+ * This MRC4 skips the first 256 bytes in PRGA.
  * */
 export function mrc4(input = [], key = [], string = true) {
     let _input = input
@@ -96,7 +84,6 @@ export function mrc4(input = [], key = [], string = true) {
     const S = ksa(fixKey)
     let output = prga(S, _input)
     /* End Main Algorithm*/
-    console.log({ _input, output, fixKey, S})
 
     if (string) output = arrayToString(output)
     return output
@@ -104,7 +91,7 @@ export function mrc4(input = [], key = [], string = true) {
 
 /** Converts string to array of ascii values as integers */
 function stringToArray(string = '') {
-    return string.split('').map(v => v.charCodeAt())
+    return new Uint8Array(string.split('').map(v => v.charCodeAt()))
 }
 
 /** Converts array of integer ascii values to string */

@@ -88,16 +88,17 @@ function LeftSide() {
             </Select>
           </Box>
           {format == "text" ? (
-            <TextInput 
-              onChange={handlePlainTextChange} 
-              inputText={inputText} 
+            <TextInput
+              onChange={handlePlainTextChange}
+              inputText={inputText}
               uppercase={!extendedvigenere}
-            />) : (
-            <FileInput 
-              fileInfo={fileInfo} 
+            />
+          ) : (
+            <FileInput
+              fileInfo={fileInfo}
               handleFileChange={handleFileChange}
-            />)
-          }
+            />
+          )}
           <FilePreview show={format == "file"} fileInfo={fileInfo} />
         </Stack>
       </CardBody>

@@ -1,22 +1,19 @@
 import { Box, Heading, Input, Stack, Text, Textarea } from "@chakra-ui/react";
 
-export function FileInput({
-  fileInfo,
-  handleFileChange
-}) {
+export function FileInput({ fileInfo, handleFileChange }) {
   return (
     <Box
-    borderColor="gray.300"
-    borderStyle="dashed"
-    borderWidth="2px"
-    rounded="md"
-    shadow="sm"
-    transition="all 150ms ease-in-out"
-    _hover={{
-      shadow: "md",
-      borderColor: "blue.300",
-    }}
-    height={20}
+      borderColor="gray.300"
+      borderStyle="dashed"
+      borderWidth="2px"
+      rounded="md"
+      shadow="sm"
+      transition="all 150ms ease-in-out"
+      _hover={{
+        shadow: "md",
+        borderColor: "blue.300",
+      }}
+      height={20}
     >
       <Box position="relative" height="100%" width="100%">
         <Box position="relative" height="100%" width="100%">
@@ -27,8 +24,7 @@ export function FileInput({
             height="100%"
           >
             <Text>
-              Click or drag and drop to{" "}
-              {fileInfo.name ? "replace" : "upload"}
+              Click or drag and drop to {fileInfo.name ? "replace" : "upload"}
             </Text>
             {fileInfo.name ? (
               <Text mt={0} fontWeight={700}>
@@ -50,7 +46,7 @@ export function FileInput({
         </Box>
       </Box>
     </Box>
-  )
+  );
 }
 
 export function FilePreview({ show, fileInfo }) {
@@ -65,10 +61,10 @@ export function FilePreview({ show, fileInfo }) {
         readOnly={true}
       />
     </>
-  ) : null
+  ) : null;
 }
 
-export function TextInput({ inputText, onChange, uppercase}) {
+export function TextInput({ inputText, onChange, uppercase }) {
   return (
     <>
       <Heading size="sm">Text</Heading>
@@ -79,9 +75,9 @@ export function TextInput({ inputText, onChange, uppercase}) {
         placeholder="Plain text here"
         style={{
           fontFamily: "monospace",
-          textTransform: uppercase ? "uppercase" : null
+          textTransform: uppercase ? "uppercase" : null,
         }}
       />
-    </> 
-  )
+    </>
+  );
 }

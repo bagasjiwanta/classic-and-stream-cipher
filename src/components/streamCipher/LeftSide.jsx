@@ -4,23 +4,20 @@ import {
   CardBody,
   CardHeader,
   Heading,
-  Input,
   Select,
   Stack,
-  Text,
-  Textarea,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { asciiOnly } from "../helper";
 import { FileInput, FilePreview, TextInput } from "../Inputs";
 
-function LeftSide({ 
-  isEncode = true, 
+function LeftSide({
+  isEncode = true,
   format,
   setFormat,
   inputText,
   setInputText,
-  setInputFile
+  setInputFile,
 }) {
   const [fileInfo, setFileInfo] = useState({
     name: "",
@@ -28,10 +25,10 @@ function LeftSide({
   });
 
   const handleFormatChange = (e) => {
-    if (format === 'text') setInputFile(null)
-    else setInputText("")
-    setFileInfo({name: '', preview: ""})
-    setFormat(e.target.value)
+    if (format === "text") setInputFile(null);
+    else setInputText("");
+    setFileInfo({ name: "", preview: "" });
+    setFormat(e.target.value);
   };
 
   const handlePlainTextChange = (e) => {
@@ -54,7 +51,7 @@ function LeftSide({
     <Card width="350px" height="500px">
       <CardHeader pb={2}>
         <Heading as="h2" size="lg" color="blue.500">
-          {!isEncode ? "Cipher" : "Plain"}
+          Cipher/Plain
         </Heading>
       </CardHeader>
       <CardBody>
@@ -69,16 +66,17 @@ function LeftSide({
             </Select>
           </Box>
           {format == "text" ? (
-            <TextInput 
-              onChange={handlePlainTextChange} 
-              inputText={inputText} 
+            <TextInput
+              onChange={handlePlainTextChange}
+              inputText={inputText}
               uppercase={false}
-            />) : (
-            <FileInput 
-              fileInfo={fileInfo} 
+            />
+          ) : (
+            <FileInput
+              fileInfo={fileInfo}
               handleFileChange={handleFileChange}
-            />)
-          }
+            />
+          )}
           <FilePreview show={format == "file"} fileInfo={fileInfo} />
         </Stack>
       </CardBody>

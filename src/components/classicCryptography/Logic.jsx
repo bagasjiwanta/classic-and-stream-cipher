@@ -40,11 +40,11 @@ export function MutiProvider({ children }) {
   };
 
   const setIsEncode = (value) => {
-    if (format !== 'file') {
-      setInputText(outputText)
-      setInputFile('')
+    if (format !== "file") {
+      setInputText(outputText);
+      setInputFile("");
     } else {
-      clean()
+      clean();
     }
     _setIsEncode(value);
   };

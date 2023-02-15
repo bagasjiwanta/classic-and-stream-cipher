@@ -1,21 +1,21 @@
-import fs from 'fs'
-import {v4 as uuidv4} from 'uuid'
+import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 
 export default function handler(req, res) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  let second = new Date().getUTCSeconds()
-  let result = ''
-  for(let i = 0;i <= 50000;i ++) {
-    result += characters[Math.floor(Math.random() * second) % 26]
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let second = new Date().getUTCSeconds();
+  let result = "";
+  for (let i = 0; i <= 50000; i++) {
+    result += characters[Math.floor(Math.random() * second) % 26];
   }
-  const filename = '/tmp/' + uuidv4() + '.txt';
+  const filename = "/tmp/" + uuidv4() + ".txt";
   try {
-    fs.writeFileSync(filename, result)
-    const fileBuffer = fs.readFileSync(filename)
-    fs.unlinkSync(filename)
-    res.setHeader('Content-Type', 'text/plain')
-    res.send(fileBuffer)
+    fs.writeFileSync(filename, result);
+    const fileBuffer = fs.readFileSync(filename);
+    fs.unlinkSync(filename);
+    res.setHeader("Content-Type", "text/plain");
+    res.send(fileBuffer);
   } catch (err) {
-    res.send(err.toString())
+    res.send(err.toString());
   }
 }
