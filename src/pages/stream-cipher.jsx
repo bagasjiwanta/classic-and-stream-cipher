@@ -10,8 +10,8 @@ import { useEffect, useState } from "react";
 export default function Page() {
   const [desktop] = useMediaQuery("(min-width: 600px)");
   const [inputText, setInputText] = useState("");
-  const [isEncode, _setIsEncode] = useState(true);
   const [format, setFormat] = useState("text");
+  const [outputFormat, setOutputFormat] = useState('text')
   const [inputFile, setInputFile] = useState([]);
   const [encryptKey, setEncryptKey] = useState("");
   const [outputText, setOutputText] = useState("");
@@ -19,22 +19,7 @@ export default function Page() {
     download(outputText, "application/octet-stream", "result");
   const downloadText = () => download(outputText, "text/plain", "result.txt");
 
-  const setIsEncode = (_input) => {
-    if (format === 'file') {
-      setInputText('')
-      setEncryptKey('')
-      setOutputText('')
-    } else {
-      setInputText(outputText)
-    }
-    
-    setInputFile([])
-    _setIsEncode(_input)
-  }
-
   const props = {
-    isEncode,
-    setIsEncode,
     inputText,
     setInputText,
     format,
@@ -47,22 +32,31 @@ export default function Page() {
     setOutputText,
     downloadFile,
     downloadText,
+    outputFormat,
+    setOutputFormat,
   };
 
   useEffect(() => {
-    if (encryptKey === "" || (inputText === "" && inputFile === null)) {
-      setOutputText("");
-      return;
+    const set = async () => {
+      if (
+        encryptKey === "" || 
+        (inputText === "" && format !== 'file') ||
+        (inputFile.length === 0 && format === 'file')
+      ) {
+        setOutputText("");
+        return;
+      }
+      let result;
+      if (format === 'file') {
+        result = await mrc4(inputFile, encryptKey, format, outputFormat);
+      } else {
+        result = await mrc4(inputText, encryptKey, format, outputFormat);
+      }
+      setOutputText(result);
     }
 
-    if (format === "text") {
-      const result = mrc4(inputText, encryptKey);
-      setOutputText(result);
-    } else {
-      const result = mrc4(inputFile, encryptKey, false);
-      setOutputText(result);
-    }
-  }, [inputFile, inputText, encryptKey, isEncode]);
+    set()
+  }, [inputFile, inputText, encryptKey, outputFormat, format]);
 
   return (
     <Box

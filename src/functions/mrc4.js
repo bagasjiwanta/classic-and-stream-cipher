@@ -44,6 +44,7 @@ function prga(S = [], M = []) {
     let i = 0;
     let j = 0;
     const output = new Uint8Array(M.length)
+    let _lfsr = lfsr(S, M.length)
 
     // modification (add 256 to the upper limit)
     for (let x = 0; x < M.length + 256; x++) {
@@ -55,9 +56,8 @@ function prga(S = [], M = []) {
         if(x > 255) {
             let g = S[(S[i] + S[j]) % N];
             let out = g ^ M[x - 256]
-            // let lfsr = 10
-            // out = lfsr ^ out
-            output[x - 256] = out;
+            let out2 = _lfsr[x - 256] ^ out
+            output[x - 256] = out2;
         } 
     }
     return output
@@ -67,19 +67,31 @@ function prga(S = [], M = []) {
  * Modified RC4 (MRC4). 
  * This MRC4 skips the first 256 bytes in PRGA.
  * */
-export function mrc4(input = [], key = [], string = true) {
-    let _input = input
-    let _key = stringToArray(key)
-    if (string) {
-        _input = stringToArray(input)
-    }
-    /* Main Algorithm */
-    const fixKey = repeatKey(_key)
-    const S = ksa(fixKey)
-    let output = prga(S, _input)
-    /* End Main Algorithm*/
-    if (string) output = arrayToString(output)
-    return output
+export function mrc4(input = [], key = [], inputFormat = 'text', outputFormat = 'text') {
+    return new Promise((resolve, _reject) => {
+        let _input = input
+        let _key = stringToArray(key)
+        if (inputFormat == 'text') {
+            _input = stringToArray(input)
+        } 
+        if (inputFormat == 'base64') {
+            _input = base64ToArray(input)
+        }
+
+        /* Main Algorithm */
+        const fixKey = repeatKey(_key)
+        const S = ksa(fixKey)
+        let output = prga(S, _input)
+        /* End Main Algorithm*/
+
+        if (outputFormat == 'text') {
+            output = arrayToString(output)
+        }
+        if (outputFormat == 'base64') {
+            output = arrayToBase64(output)
+        }
+        resolve(output)
+    })
 }
 
 /** Converts string to array of ascii values as integers */
@@ -87,9 +99,33 @@ function stringToArray(string = '') {
     return new Uint8Array(string.split('').map(v => v.charCodeAt()))
 }
 
+function base64ToArray(string = '') {
+    return new Uint8Array(Buffer.from(string, 'base64'))
+}
+
+function arrayToBase64(array = []) {
+    return Buffer.from(array).toString('base64')
+}
+
 /** Converts array of integer ascii values to string */
 function arrayToString(array = []) {
     let output = ''
     array.forEach(v => output += String.fromCharCode(v))
     return output;
+}
+
+function lfsr(S, messageLength) {
+    let U = S[0]
+    const output = new Array(messageLength)
+    for (let x = 0;x < messageLength;x++){
+        let lastBit = U & 1
+        let fifthFromLastBit = (U & 32) >> 5
+        let result = lastBit ^ fifthFromLastBit
+        U = U >> 1
+        let u = U.toString(2).padStart(64, '0').split('')
+        u[58] = result.toString()
+        U = Number.parseInt(u.join(''), 2)
+        output[x] = lastBit
+    }
+    return output
 }

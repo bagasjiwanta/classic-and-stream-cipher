@@ -25,7 +25,7 @@ function LeftSide({
   });
 
   const handleFormatChange = (e) => {
-    if (format === "text") setInputFile(null);
+    if (format !== "text") setInputFile([]);
     else setInputText("");
     setFileInfo({ name: "", preview: "" });
     setFormat(e.target.value);
@@ -51,7 +51,7 @@ function LeftSide({
     <Card width="350px" height="500px">
       <CardHeader pb={2}>
         <Heading as="h2" size="lg" color="blue.500">
-          {isEncode ? "Plain" : "Cipher"}
+          Input
         </Heading>
       </CardHeader>
       <CardBody>
@@ -62,19 +62,20 @@ function LeftSide({
             </Heading>
             <Select defaultValue="text" onChange={handleFormatChange}>
               <option value="text">Text</option>
+              <option value="base64">Base64</option>
               <option value="file">File</option>
             </Select>
           </Box>
-          {format == "text" ? (
+          {format == "file" ? (
+            <FileInput
+              fileInfo={fileInfo}
+              handleFileChange={handleFileChange}
+            />
+          ) : (
             <TextInput
               onChange={handlePlainTextChange}
               inputText={inputText}
               uppercase={false}
-            />
-          ) : (
-            <FileInput
-              fileInfo={fileInfo}
-              handleFileChange={handleFileChange}
             />
           )}
           <FilePreview show={format == "file"} fileInfo={fileInfo} />

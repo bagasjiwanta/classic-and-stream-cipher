@@ -23,19 +23,8 @@ function Middle({ setEncryptKey, encryptKey, isEncode, setIsEncode}) {
         <HStack justifyContent="flex-start" gap={2}>
         <Heading
             size="lg"
-            opacity={isEncode ? "1" : "0.4"}
-            onClick={() => setIsEncode(true)}
-            cursor="pointer"
           >
-            Encode
-          </Heading>
-          <Heading
-            size="lg"
-            opacity={isEncode ? "0.4" : "1"}
-            onClick={() => setIsEncode(false)}
-            cursor="pointer"
-          >
-            Decode
+            Encode/Decode
           </Heading>
         </HStack>
       </CardHeader>
