@@ -1,7 +1,7 @@
 # tucil-1-kripto
 Tugas Kecil 1 Kelas Kriptokoding STI
 
-In this project, we make ciphers with UI. Built with Nextjs only.
+In this project, we make cryptography ciphers with UI. Built with Nextjs only.
 
 ## Classical Cipher
   - Vigenere cipher: cipher by addition/subtraction between key and plaintext
