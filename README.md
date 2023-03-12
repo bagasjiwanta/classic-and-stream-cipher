@@ -15,3 +15,9 @@ RSA with 2 modifications to make it more secure:
   - Adding a LFSR layer to add more randomness
 
 Check our work here: [tucil-1-kripto.vercel.app](https://tucil-1-kripto.vercel.app)
+
+Some snapshots:
+
+![image](https://user-images.githubusercontent.com/68982753/224549386-4fe9dd29-4b9d-453f-a6b1-57b94ae6c3bb.png)
+![image](https://user-images.githubusercontent.com/68982753/224549423-0b71f2cd-3dbc-45ec-a0b1-feaec7220c6e.png)
+![image](https://user-images.githubusercontent.com/68982753/224549443-273725da-a45f-42e7-a9ac-9820fdd33297.png)
