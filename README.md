@@ -9,10 +9,10 @@ In this project, we make cryptography ciphers with NextJS.
  
 ## Stream cipher
 RSA with 2 modifications to make it more secure:
-  - Dropping the first 256 prga but still mixing the state
-  - Adding a LFSR layer to add more randomness
+  - Dropping the first 256 prga iterations but still mixing the state
+  - Adding a LFSR layer to the XOR process add more randomness
 
-Check our work here: [tucil-1-kripto.vercel.app](https://tucil-1-kripto.vercel.app)
+Check our work here: https://classic-and-stream-cipher.vercel.app/
 
 ## Snapshots
 
