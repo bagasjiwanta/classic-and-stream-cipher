@@ -1,7 +1,5 @@
-# tucil-1-kripto
-Tugas Kecil 1 Kelas Kriptokoding STI
-
-In this project, we make ciphers with UI. Built with Nextjs only.
+# Classic and Stream Cipher
+In this project, we make cryptography ciphers with NextJS.
 
 ## Classical Cipher
   - Vigenere cipher: cipher by addition/subtraction between key and plaintext
@@ -11,7 +9,13 @@ In this project, we make ciphers with UI. Built with Nextjs only.
  
 ## Stream cipher
 RSA with 2 modifications to make it more secure:
-  - Dropping the first 256 prga but still mixing the state
-  - Adding a LFSR layer to add more randomness
+  - Dropping the first 256 prga iterations but still mixing the state
+  - Adding a LFSR layer to the XOR process add more randomness
 
-Check our work here: [tucil-1-kripto.vercel.app](https://tucil-1-kripto.vercel.app)
+Check our work here: https://classic-and-stream-cipher.vercel.app/
+
+## Snapshots
+
+![image](https://user-images.githubusercontent.com/68982753/224549386-4fe9dd29-4b9d-453f-a6b1-57b94ae6c3bb.png)
+![image](https://user-images.githubusercontent.com/68982753/224549423-0b71f2cd-3dbc-45ec-a0b1-feaec7220c6e.png)
+![image](https://user-images.githubusercontent.com/68982753/224549443-273725da-a45f-42e7-a9ac-9820fdd33297.png)

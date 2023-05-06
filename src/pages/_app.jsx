@@ -5,10 +5,10 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Tucil 1 Kripto</title>
+        <title>Classic and Stream Cipher</title>
         <meta
           name="description"
-          content="Vigenere cipher, extended vigenere cipher, playfair cipher, dan one time pad cipher"
+          content="Classic cipher (vigenere, extended vigenere, playfair, and one time pad cipher) and stream cipher (RC4)"
         />
         <link
           rel="apple-touch-icon"
